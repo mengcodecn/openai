@@ -81,6 +81,7 @@ interface class OpenAIChat implements OpenAIChatBase {
     Map<String, dynamic>? logitBias,
     String? user,
     http.Client? client,
+    bool? safeMode,
   }) async {
     return await OpenAINetworkingClient.post(
       to: BaseApiUrlBuilder.build(endpoint),
@@ -101,6 +102,7 @@ interface class OpenAIChat implements OpenAIChatBase {
         if (frequencyPenalty != null) "frequency_penalty": frequencyPenalty,
         if (logitBias != null) "logit_bias": logitBias,
         if (user != null) "user": user,
+        if (safeMode != null) "safe_mode": safeMode,
       },
       onSuccess: (Map<String, dynamic> response) {
         return OpenAIChatCompletionModel.fromMap(response);
