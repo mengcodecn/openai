@@ -88,10 +88,7 @@ interface class OpenAIChat implements OpenAIChatBase {
       body: {
         "model": model,
         "messages": messages.map((message) => message.toMap()).toList(),
-        if (functions != null)
-          "functions": functions
-              .map((function) => function.toMap())
-              .toList(growable: false),
+        if (functions != null) "functions": functions.map((function) => function.toMap()).toList(growable: false),
         if (functionCall != null) "function_call": functionCall.value,
         if (temperature != null) "temperature": temperature,
         if (topP != null) "top_p": topP,
@@ -172,6 +169,7 @@ interface class OpenAIChat implements OpenAIChatBase {
     Map<String, dynamic>? logitBias,
     String? user,
     http.Client? client,
+    bool? safeMode,
   }) {
     return OpenAINetworkingClient.postStream<OpenAIStreamChatCompletionModel>(
       to: BaseApiUrlBuilder.build(endpoint),
@@ -188,6 +186,7 @@ interface class OpenAIChat implements OpenAIChatBase {
         if (frequencyPenalty != null) "frequency_penalty": frequencyPenalty,
         if (logitBias != null) "logit_bias": logitBias,
         if (user != null) "user": user,
+        if (safeMode != null) "safe_mode": safeMode,
       },
       onSuccess: (Map<String, dynamic> response) {
         return OpenAIStreamChatCompletionModel.fromMap(response);
